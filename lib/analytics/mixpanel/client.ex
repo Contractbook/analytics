@@ -35,5 +35,5 @@ defmodule Analytics.Mixpanel.Client do
 
   def token, do: Application.fetch_env!(:analytics, :mixpanel)[:token]
 
-  defp encode_data!(data), do: data |> Jason.encode!() |> Base.encode64()
+  defp encode_data!(data), do: data |> Poison.encode!() |> Base.encode64()
 end

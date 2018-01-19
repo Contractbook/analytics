@@ -34,7 +34,7 @@ defmodule Analytics.MixProject do
   defp deps do
     [
       {:hackney, "~> 1.10"},
-      {:jason, "~> 1.0.0-rc.2"},
+      {:poison, "~> 3.1"},
       {:ex_doc, ">= 0.16.0", only: [:dev, :test]},
       {:excoveralls, ">= 0.7.0", only: [:dev, :test]},
       {:dogma, "> 0.1.0", only: [:dev, :test]},
