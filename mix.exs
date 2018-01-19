@@ -49,7 +49,7 @@ defmodule Analytics.MixProject do
       contributors: ["Nebo #15"],
       maintainers: ["Nebo #15"],
       licenses: ["MIT"],
-      links: %{github: "https://github.com/Nebo15/annon.api"},
+      links: %{github: "https://github.com/contractbook/analytics"},
       files: ~w(lib LICENSE.md mix.exs README.md)
     ]
   end

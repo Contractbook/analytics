@@ -22,3 +22,6 @@ config :analytics, :mixpanel,
 
 The docs can be found at [https://hexdocs.pm/analytics](https://hexdocs.pm/analytics).
 
+## License
+
+See [LICENSE.md](LICENSE.md).
