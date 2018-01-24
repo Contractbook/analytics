@@ -38,6 +38,15 @@ defmodule Analytics.Mixpanel.People do
   end
 
   @doc """
+  Removes the profile attribute.
+
+  For more details see `submit/2`.
+  """
+  def unset(%People{} = batch_request, key, value) do
+    %{batch_request | operations: [{"$unset", key, value} | batch_request.operations]}
+  end
+
+  @doc """
   Works just like `set/2`, except it will not overwrite existing property values.
   This is useful for properties like "First login date".
 
@@ -119,6 +128,7 @@ defmodule Analytics.Mixpanel.People do
     |> Enum.reverse()
     |> Enum.group_by(&elem(&1, 0), &Tuple.delete_at(&1, 0))
     |> maybe_merge_set()
+    |> maybe_merge_unset()
     |> maybe_merge_set_once()
     |> maybe_merge_add()
     |> maybe_merge_union()
@@ -140,6 +150,15 @@ defmodule Analytics.Mixpanel.People do
   end
 
   defp maybe_merge_set(operations) do
+    operations
+  end
+
+  defp maybe_merge_unset(%{"$unset" => updates} = operations) do
+    unset = Enum.reduce(updates, %{}, fn {key, value}, acc -> Map.put(acc, key, value) end)
+    Map.put(operations, "$unset", unset)
+  end
+
+  defp maybe_merge_unset(operations) do
     operations
   end
 

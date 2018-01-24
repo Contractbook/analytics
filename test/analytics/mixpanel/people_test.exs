@@ -74,6 +74,7 @@ defmodule Analytics.Mixpanel.PeopleTest do
       %{new(@distinct_id) | client: Analytics.Mixpanel.TestClient}
       |> set("foo", "bar")
       |> set("fiz", "buz")
+      |> unset("liz", "cuz")
       |> set_once("nix", "lix")
       |> set_once("nix", "tax")
       |> increment("i")
@@ -95,7 +96,8 @@ defmodule Analytics.Mixpanel.PeopleTest do
              %{"$append" => %{"l" => 3}},
              %{"$set" => %{"fiz" => "buz", "foo" => "bar"}},
              %{"$set_once" => %{"nix" => "lix"}},
-             %{"$union" => %{"lx" => [1, 2, 3, 2, 3, 4]}}
+             %{"$union" => %{"lx" => [1, 2, 3, 2, 3, 4]}},
+             %{"$unset" => %{"liz" => "cuz"}},
            ] = changes
   end
 end
