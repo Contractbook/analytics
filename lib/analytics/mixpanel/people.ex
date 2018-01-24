@@ -42,8 +42,8 @@ defmodule Analytics.Mixpanel.People do
 
   For more details see `submit/2`.
   """
-  def unset(%People{} = batch_request, key, value) do
-    %{batch_request | operations: [{"$unset", key, value} | batch_request.operations]}
+  def unset(%People{} = batch_request, key) do
+    %{batch_request | operations: [{"$unset", key} | batch_request.operations]}
   end
 
   @doc """
@@ -137,6 +137,9 @@ defmodule Analytics.Mixpanel.People do
       {operation, values} when is_map(values) ->
         [Map.put(event_template, operation, values)]
 
+      {"$unset" = operation, values} ->
+        [Map.put(event_template, operation, values)]
+
       {operation, values} when is_list(values) ->
         Enum.map(values, fn value ->
           Map.put(event_template, operation, value)
@@ -154,7 +157,7 @@ defmodule Analytics.Mixpanel.People do
   end
 
   defp maybe_merge_unset(%{"$unset" => updates} = operations) do
-    unset = Enum.reduce(updates, %{}, fn {key, value}, acc -> Map.put(acc, key, value) end)
+    unset = Enum.reduce(updates, [], fn {key}, acc -> [key] ++ acc end)
     Map.put(operations, "$unset", unset)
   end
 
