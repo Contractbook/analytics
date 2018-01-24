@@ -18,6 +18,19 @@ defmodule Analytics.Mixpanel.EventsTest do
     end
   end
 
+  describe "new/0" do
+    test "creates a struct with token and client" do
+      assert new() ==
+               %Events{
+                 client: Analytics.Mixpanel.Client,
+                 events: [],
+                 distinct_id: nil,
+                 ip: nil,
+                 token: "test_token"
+               }
+    end
+  end
+
   describe "set_ip/1" do
     test "tracks user IP address as a binary" do
       events = %{new(@distinct_id) | client: Analytics.Mixpanel.TestClient}
@@ -52,7 +65,7 @@ defmodule Analytics.Mixpanel.EventsTest do
     end
   end
 
-  test "submits tracked events" do
+  test "submits tracked events with distinct_id in struct" do
     events =
       %{new(@distinct_id) | client: Analytics.Mixpanel.TestClient}
       |> track("test_eventA")
@@ -71,6 +84,29 @@ defmodule Analytics.Mixpanel.EventsTest do
              %{
                event: "test_eventc",
                properties: %{:fiz => "buz", "distinct_id" => @distinct_id, "token" => "test_token"}
+             }
+           ]
+  end
+
+  test "submits tracked events with distinct_id in track/4" do
+    events =
+      %{new() | client: Analytics.Mixpanel.TestClient}
+      |> track_for_user("userA", "test_eventA")
+      |> track_for_user("userA", "test_eventB", %{"foo" => "bar"})
+      |> track_for_user("userB", "test_eventc", %{fiz: "buz"})
+
+    assert submit(events) == :ok
+    assert_receive {:mixpanel_request, "track", events}, 500
+
+    assert events == [
+             %{event: "test_eventA", properties: %{"distinct_id" => "userA", "token" => "test_token"}},
+             %{
+               event: "test_eventB",
+               properties: %{"distinct_id" => "userA", "foo" => "bar", "token" => "test_token"}
+             },
+             %{
+               event: "test_eventc",
+               properties: %{:fiz => "buz", "distinct_id" => "userB", "token" => "test_token"}
              }
            ]
   end
