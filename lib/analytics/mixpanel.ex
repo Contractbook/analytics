@@ -77,4 +77,12 @@ defmodule Analytics.Mixpanel do
     |> People.track_charge(amount, metadata)
     |> People.submit()
   end
+
+  @doc false
+  def config do
+    config = Application.fetch_env!(:analytics, :mixpanel)
+    client = Keyword.get(config, :client, Analytics.Mixpanel.Client)
+    token = Keyword.fetch!(config, :token)
+    [client: client, token: token]
+  end
 end

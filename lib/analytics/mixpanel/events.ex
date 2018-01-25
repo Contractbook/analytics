@@ -11,8 +11,12 @@ defmodule Analytics.Mixpanel.Events do
   @doc """
   Creates a new `Events` struct that is used to submit events for a client identified with `distinct_id`.
   """
-  def new(distinct_id), do: %Events{distinct_id: distinct_id, token: Analytics.Mixpanel.Client.token()}
-  def new, do: %Events{token: Analytics.Mixpanel.Client.token()}
+  def new(distinct_id), do: %{new() | distinct_id: distinct_id}
+
+  def new do
+    [client: client, token: token] = Analytics.Mixpanel.config()
+    %Events{client: client, token: token}
+  end
 
   @doc """
   The IP address associated with a given profile, which Mixpanel

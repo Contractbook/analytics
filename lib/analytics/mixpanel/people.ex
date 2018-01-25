@@ -15,7 +15,10 @@ defmodule Analytics.Mixpanel.People do
   @doc """
   Creates a new `People` struct that updates person with a `distinct_id`.
   """
-  def new(distinct_id), do: %People{distinct_id: distinct_id, token: Analytics.Mixpanel.Client.token()}
+  def new(distinct_id) do
+    [client: client, token: token] = Analytics.Mixpanel.config()
+    %People{distinct_id: distinct_id, client: client, token: token}
+  end
 
   @doc """
   The IP address associated with a given profile, which Mixpanel

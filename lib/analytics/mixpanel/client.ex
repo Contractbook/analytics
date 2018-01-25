@@ -33,7 +33,5 @@ defmodule Analytics.Mixpanel.Client do
   def format_error({status, body}),
     do: "The client received malformed error response `#{body}` with #{to_string(status)} HTTP code"
 
-  def token, do: Application.fetch_env!(:analytics, :mixpanel)[:token]
-
   defp encode_data!(data), do: data |> Poison.encode!() |> Base.encode64()
 end
