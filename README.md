@@ -9,7 +9,7 @@ The package can be installed by adding `analytics` to your list of dependencies 
 ```elixir
 def deps do
   [
-    {:analytics, "~> 0.2.0"}
+    {:analytics, "~> 0.4.0"}
   ]
 end
 ```
