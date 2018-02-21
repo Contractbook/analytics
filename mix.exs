@@ -1,7 +1,7 @@
 defmodule Analytics.MixProject do
   use Mix.Project
 
-  @version "0.4.0"
+  @version "0.5.0"
 
   def project do
     [
@@ -34,7 +34,7 @@ defmodule Analytics.MixProject do
   defp deps do
     [
       {:hackney, "~> 1.10"},
-      {:poison, "~> 3.1"},
+      {:jason, "~> 1.0"},
       {:ex_doc, ">= 0.16.0", only: [:dev, :test]},
       {:excoveralls, ">= 0.7.0", only: [:dev, :test]},
       {:dogma, "> 0.1.0", only: [:dev, :test]},

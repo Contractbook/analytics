@@ -33,5 +33,5 @@ defmodule Analytics.Mixpanel.Client do
   def format_error({status, body}),
     do: "The client received malformed error response `#{body}` with #{to_string(status)} HTTP code"
 
-  defp encode_data!(data), do: data |> Poison.encode!() |> Base.encode64()
+  defp encode_data!(data), do: data |> Jason.encode!() |> Base.encode64()
 end
