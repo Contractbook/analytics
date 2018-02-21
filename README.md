@@ -1,6 +1,6 @@
 # Analytics
 
-Universal analytics client, currently only supports Mixpanel.
+Universal analytics client, currently only supports Mixpanel. We use it in production.
 
 ## Installation
 
