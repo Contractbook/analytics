@@ -1,6 +1,6 @@
 # Analytics
 
-Universal analytics client, currently only supports Mixpanel.
+Universal analytics client, currently only supports Mixpanel and Segment.io.
 
 ## Installation
 
@@ -18,6 +18,13 @@ And set your Mixpanel token in `config.ex`:
 ```
 config :analytics, :mixpanel,
   token: "my_mixpanel_token"
+```
+
+or Segment config:
+
+```
+config :analytics, :segment,
+  write_key: "my_write_key"
 ```
 
 The docs can be found at [https://hexdocs.pm/analytics](https://hexdocs.pm/analytics).

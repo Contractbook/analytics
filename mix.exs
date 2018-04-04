@@ -1,12 +1,12 @@
 defmodule Analytics.MixProject do
   use Mix.Project
 
-  @version "0.5.0"
+  @version "0.6.0"
 
   def project do
     [
       app: :analytics,
-      description: "Universal analytics client, currently only supports Mixpanel",
+      description: "Universal analytics client, currently only supports Mixpanel and Segment.io",
       package: package(),
       version: @version,
       elixir: "~> 1.5",
